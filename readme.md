@@ -7,9 +7,8 @@ But unlike CSV files, BTables are completely **binary**, giving a huge advantage
 
 And while they are also **not compressed**, the size of the rows are always fixed, meaning a **fast random access**, as the position of a desired row can be easily calculated.
 
-A specific row **can be updated** by seeking to it and overwritting its data.
-
 ## File Structure Specification
+There are two main block types in a BTable, the **head**, and the **body**, but we are also going to explain how strings are encoded.
 
 ### <ins>Header</ins>
 All BTable files have headers, displaying information in the following structure:

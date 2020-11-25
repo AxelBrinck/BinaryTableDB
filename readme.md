@@ -13,13 +13,22 @@ There are two main block types in a BTable, the **head**, and the **body**, but 
 ### <ins>Header</ins>
 All BTable files have headers, displaying information in the following structure:
 
-- **Number of columns:** <ins>8bit integer</ins>. Total amount of columns. Maximum 256 columns.
-- **Column name:** <ins>String</ins>. Name and identifier. Used to reference a cell in a row.<br>
-*This can also be done by providing a column index, in fact, using column indexes are much faster.*
-- **Column width:** <ins>8bit integer</ins>. Maximum width for all the cells in the column. Maximum 256 bytes.
+| Data                  | Type          | Size          | Description |
+| -------------         | ------------- | ------------  | ----------- |
+| Number of columns     | Integer       | 8bit          | Total amount of columns |
+| Column name           | Char Array    | Variable      | Name and also an identifier |
+| Column width          | Integer       | 8bit          | Maximum width for all the cells in the column |
+
+*It is recommended to reference a column by providing a column index, it will result in a much faster seek.*
 
 ### <ins>String</ins>
 Binary strings in BTables are represented in file as it follows:
+
+| Data                  | Type          | Size          | Description |
+| -------------         | ------------- | ------------  | ----------- |
+| The string char count | Integer       | 8bit          | Total amount of chars in the array |
+| The character array   | Char Array    | Variable      | The char array itself |
+
 - **Character count:** <ins>8bit integer</ins>. Maximum 255 bytes/characters.
 - **Character array:** <ins>Array</ins>. The string itself.
 

@@ -29,9 +29,6 @@ Binary strings in BTables are represented in file as it follows:
 | The string char count | Integer       | 8bit          | Total amount of chars in the array |
 | The character array   | Char Array    | Variable      | The char array itself |
 
-- **Character count:** <ins>8bit integer</ins>. Maximum 255 bytes/characters.
-- **Character array:** <ins>Array</ins>. The string itself.
-
 ### <ins>Body</ins>
 The body contains the BTable rows, and are stored as the header describes for each file.
 

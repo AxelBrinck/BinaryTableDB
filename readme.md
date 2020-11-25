@@ -16,7 +16,7 @@ All BTable files have headers, displaying information in the following structure
 | Data                  | Type          | Size          | Description |
 | -------------         | ------------- | ------------  | ----------- |
 | Number of columns     | Integer       | 8bit          | Total amount of columns |
-| Column name           | Char Array    | Variable      | Name and also an identifier |
+| Column name           | String        | Variable      | Name and also an identifier |
 | Column width          | Integer       | 8bit          | Maximum width for all the cells in the column |
 
 *It is recommended to reference a column by providing a column index, it will result in a much faster seek.*

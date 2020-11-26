@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace BinaryTableDB
@@ -31,11 +32,14 @@ namespace BinaryTableDB
         /// <param name="column">The column to add.</param>
         public void AddColumn(BTableColumn column)
         {
+            if (_columns.Count >= 256) throw 
+                new Exception("Reached maximum number of columns");
+                
             _columns.Add(column);
         }
 
         /// <summary>
-        /// Creates the BTable with the specified columns.
+        /// Creates the BTable from the previously specified columns.
         /// </summary>
         public void CreateBTable()
         {

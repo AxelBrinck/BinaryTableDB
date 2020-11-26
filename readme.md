@@ -10,7 +10,7 @@ And while they are also **not compressed**, the size of the rows are always fixe
 ## File Structure Specification
 There are two main block types in a BTable, the **head**, and the **body**, but we are also going to explain how strings are encoded.
 
-### <ins>Head</ins>
+### <ins>Header</ins>
 All BTable files have headers, displaying information in the following structure:
 
 | Data                  | Type          | Size          | Description |

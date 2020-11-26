@@ -53,6 +53,8 @@ namespace BinaryTableDB
                 _writer.Write(column.Name);
                 _writer.Write((byte) column.Size);
             }
+
+            _writer.Flush();
         }
     }
 }

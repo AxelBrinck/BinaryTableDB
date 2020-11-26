@@ -50,8 +50,8 @@ namespace BinaryTableDB
 
             foreach(var column in _columns)
             {
-                _writer.Write((char) column.Size);
                 _writer.Write(column.Name);
+                _writer.Write((byte) column.Size);
             }
         }
     }

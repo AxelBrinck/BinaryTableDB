@@ -10,7 +10,7 @@ And while they are also **not compressed**, the size of the rows are always fixe
 ## File Structure Specification
 There are two main block types in a BTable, the **head**, and the **body**, but we are also going to explain how strings are encoded.
 
-### <ins>Header</ins>
+### <ins>Head</ins>
 All BTable files have headers, displaying information in the following structure:
 
 | Data                  | Type          | Size          | Description |
@@ -20,14 +20,6 @@ All BTable files have headers, displaying information in the following structure
 | Column width          | Integer       | 8bit          | Maximum width for all the cells in the column |
 
 *It is recommended to reference a column by providing a column index, it will result in a much faster seek.*
-
-### <ins>String</ins>
-Binary strings in BTables are represented in file as it follows:
-
-| Data                  | Type          | Size          | Description |
-| -------------         | ------------- | ------------  | ----------- |
-| The string char count | Integer       | 8bit          | Total amount of chars in the array |
-| The character array   | Char Array    | Variable      | The char array itself |
 
 ### <ins>Body</ins>
 The body contains the BTable rows, and are stored as the header describes for each file.

@@ -32,8 +32,10 @@ namespace BinaryTableDB
             for (var i = 0; i < columnCount; i++)
             {
                 // This 8-bit number contains the character length.
-                int charCount = _reader.ReadByte();
-                var columnName = new string(_reader.ReadChars(charCount));
+                var columnName = _reader.ReadString();
+                var columnSize = _reader.ReadByte();
+
+                _columns.Add(new BTableColumn(columnName, columnSize));
             }
         }
     }

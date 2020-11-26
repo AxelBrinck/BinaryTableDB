@@ -1,12 +1,13 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 
 namespace BinaryTableDB
 {
     /// <summary>
-    /// Manages an already created BTable.
+    /// Manages and converts data from an already created BTable.
     /// </summary>
-    public class BTable
+    public abstract class BTable<T>
     {
         private readonly Stream _stream;
         private readonly BinaryReader _reader;
@@ -38,5 +39,20 @@ namespace BinaryTableDB
                 _columns.Add(new BTableColumn(columnName, columnSize));
             }
         }
+
+        /// <summary>
+        /// Converts binary data from the row to the object <see cref="T"/>.
+        /// </summary>
+        /// <param name="row">The target row to read from.</param>
+        /// <returns></returns>
+        public abstract T read(long row);
+
+        /// <summary>
+        /// The row to convert to.
+        /// </summary>
+        /// <param name="row">The row to write to.</param>
+        /// <param name="data">The data to use as source.</param>
+        public abstract void write(long row, T data);
+        
     }
 }

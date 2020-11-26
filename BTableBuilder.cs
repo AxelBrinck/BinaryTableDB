@@ -1,9 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 
 namespace BinaryTableDB
 {
+    /// <summary>
+    /// Builds a BTable.
+    /// </summary>
     public class BTableBuilder
     {
         private readonly Stream _stream;
@@ -24,6 +26,7 @@ namespace BinaryTableDB
         /// <summary>
         /// Adds a column to the list of column definitions.
         /// All columns are added sequentially.
+        /// The maximum number of columns is 256.
         /// </summary>
         /// <param name="column">The column to add.</param>
         public void AddColumn(BTableColumn column)
@@ -36,7 +39,8 @@ namespace BinaryTableDB
         /// </summary>
         public void CreateBTable()
         {
-            // TODO: Throw if stream is not empty.
+            if (_stream.Length > 0) throw 
+                new InvalidDataException("Stream must be empty.");
 
             _writer.Write((char) _columns.Count); // TODO: Throw if overflow.
 

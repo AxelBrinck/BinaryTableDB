@@ -9,6 +9,8 @@ namespace BinaryTableDB
     public class BTableStream<T> where T : ICustomSerializable, new()
     {
         private static readonly int HeaderSize = 8; // Bytes
+        private static readonly int Version = 1;
+        private static readonly int EmptySize = 0;
 
         private readonly Stream _stream;
         private readonly BinaryReader _reader;
@@ -34,7 +36,7 @@ namespace BinaryTableDB
             _reader = new BinaryReader(stream);
             _writer = new BinaryWriter(stream);
 
-            if (_stream.Length > 0)
+            if (_stream.Length > EmptySize)
             {
                 if (_stream.Length < HeaderSize) throw
                     new InvalidDataException("The file is corrupted.");
@@ -55,7 +57,7 @@ namespace BinaryTableDB
             }
 
             _writer.Write("BT");
-            _writer.Write((byte) 1);
+            _writer.Write((byte) Version);
         }
 
         /// <summary>

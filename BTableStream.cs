@@ -8,16 +8,15 @@ namespace BinaryTableDB
     /// </summary>
     public class BTableStream<T> where T : ICustomSerializable, new()
     {
+        private static readonly int HeaderSize = 8; // Bytes
+
         private readonly Stream _stream;
         private readonly BinaryReader _reader;
         private readonly BinaryWriter _writer;
 
-
         private int _rowWidth;
 
         private bool initialized;
-
-        private static readonly int HeaderSize = 8; // Bytes
 
         /// <summary>
         /// Instatiates the BTable by providing a stream.

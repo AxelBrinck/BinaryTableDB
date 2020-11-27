@@ -1,27 +1,21 @@
 # BinaryTableDB
 
 ## Description
-**BinaryTableDB**, or from now on *"BTable"*, is a **local database file architecture**, in which data is represented by **columns and rows**.
+**BinaryTableDB**, or from now on *"BTable"*, is a **local database file architecture**, in which you are free to code your **own interpreter**, meaning that you are responsible about how exactly the data is encoded in a stream. This gives speed advantages as there will be very little overhead compared to other solutions.
 
-But unlike CSV files, BTables are completely **binary**, giving a huge advantage in read/write speed. 
+We can compare the data structure to be like a CSV file, but in completely **binary** version.
 
-And while they are also **not compressed**, the size of the rows are always fixed, meaning a **fast random access**, as the position of a desired row can be easily calculated.
+Implementing *ICustomSerializable* will enable you with 
 
-## File Structure Specification
-There are two main block types in a BTable, the **head**, and the **body**.
+## Data Specification
 
-### <ins>Header</ins>
-All BTable files have headers, displaying information in the following structure:
+### Header
+| Name | Size | Type | Value | Description |
+| ---- | ---- | ---- | ----- | ----------- |
+| Signature | 2-byte | String | BT | BTable signature header
+| Version   | 1-byte | Integer | 1 | Data-structure version
+| Row width | 4-byte | Integer | Variable | The number of bytes every row  has
 
-| Data                  | Type          | Size          | Description |
-| -------------         | ------------- | ------------  | ----------- |
-| Number of columns     | Integer       | 8bit          | Total amount of columns |
-| Column name           | String        | Variable      | Name and also an identifier |
-| Column width          | Integer       | 8bit          | Maximum width for all the cells in the column |
-
-*It is recommended to reference a column by providing a column index, it will result in a much faster seek.*
-
-### <ins>Body</ins>
-The body contains the BTable rows, and are stored as the header describes for each file.
-
-*For example: A body for a 16 and 256 byte header columns widths, would be a corresponding binary data space of 16 bytes and 256 bytes.*
+### Body
+- The entries stored after the header needs to be encoded/decoded implementing *ICustomSerializable*.
+- Each entry cannot exceed the row width.

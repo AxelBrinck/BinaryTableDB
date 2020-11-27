@@ -12,7 +12,7 @@ Implementing *ICustomSerializable* will enable you with
 ### Header
 | Name | Size | Type | Value | Description |
 | ---- | ---- | ---- | ----- | ----------- |
-| Signature | 2-byte | String | BT | BTable signature header
+| Signature | 3-byte | String | BT | BTable signature header
 | Version   | 1-byte | Integer | 1 | Data-structure version
 | Row width | 4-byte | Integer | Variable | The number of bytes every row  has
 

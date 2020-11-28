@@ -6,7 +6,7 @@ namespace BinaryTableDB
     /// <summary>
     /// Reads and writes to a BTable stream.
     /// </summary>
-    public class BTableStream<T> where T : ICustomSerializable, new()
+    public class BTableStream<T> where T : IBTableRowSerializable, new()
     {
         private static readonly int HeaderSize = 8; // Bytes
         private static readonly int Version = 1;
@@ -50,6 +50,8 @@ namespace BinaryTableDB
                     new InvalidDataException("Unrecognized version.");
 
                 _rowWidth = _reader.ReadInt32();
+                
+                Console.WriteLine($"Header read. Signature: { signature }. Version: { version }. Row width: { _rowWidth }");
 
                 initialized = true;
 
@@ -58,6 +60,8 @@ namespace BinaryTableDB
 
             _writer.Write("BT");
             _writer.Write((byte) Version);
+
+            Console.WriteLine("Header written.");
         }
 
         /// <summary>
@@ -66,7 +70,11 @@ namespace BinaryTableDB
         /// <param name="rowId">The row Id to seek.</param>
         private void SeekToRowId(long rowId)
         {
-            _stream.Position = HeaderSize + rowId * _rowWidth;
+            long targetPosition = HeaderSize + rowId * _rowWidth;
+            Console.WriteLine($"Requested row: { rowId }. Row width is: { _rowWidth }");
+            Console.WriteLine($"Seeking to position: { targetPosition }");
+
+            _stream.Position = targetPosition;
         }
 
         /// <summary>
@@ -76,15 +84,25 @@ namespace BinaryTableDB
         /// <param name="data">The data to write.</param>
         public void WriteRow(int rowId, T data)
         {
-            SeekToRowId(rowId);
+
+            Console.WriteLine("Performing write...");
+
 
             var serial = data.Serialize();
 
             if (!initialized)
             {
                 _rowWidth = serial.Length;
-                _writer.Write((byte) _rowWidth);
+                _writer.Write(_rowWidth);
+                
+                initialized = true;
+                Console.WriteLine($"Stream initialized with row width: { _rowWidth }. Serial Length: { serial.Length }. Row width byte position: { _stream.Position - 4 }");
             }
+
+            if (serial.Length > _rowWidth) throw
+                new InvalidOperationException("Inbound data is bigger than row width.");
+
+            SeekToRowId(rowId);
 
             _writer.Write(serial);
 
@@ -102,14 +120,16 @@ namespace BinaryTableDB
                 new InvalidOperationException("The stream is not initialized!");
 
             SeekToRowId(rowId);
+            
+            Console.WriteLine("Performing read...");
 
-            var instantiation = new T();
+            var instance = new T();
 
             var serial = _reader.ReadBytes(_rowWidth); 
 
-            instantiation.Deserialize(serial);
+            instance.Deserialize(serial);
 
-            return instantiation;
+            return instance;
         }
     }
 }

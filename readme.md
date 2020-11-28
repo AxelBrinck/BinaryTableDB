@@ -7,6 +7,11 @@ We can compare the data structure to be like a CSV file, but in completely **bin
 
 In order to specify encoding/decoding procedures you must implement *ICustomSerializable* to the class representing a row.
 
+## Installation
+Run this command in your .Net project dir.
+
+`dotnet add package BinaryTableDB --version 1.0.0`
+
 ## Data Specification
 There are two different blocks of data in every BTable file version 1, **header** and **body**.
 

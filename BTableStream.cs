@@ -148,7 +148,7 @@ namespace BinaryTableDB
             if (!rowWidthInitialized) throw 
                 new InvalidOperationException("The stream is not initialized!");
 
-            GetRowIdStreamPosition(rowId);
+            _stream.Position = GetRowIdStreamPosition(rowId);
 
             var instance = new T();
 

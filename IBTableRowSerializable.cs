@@ -3,7 +3,7 @@ namespace BinaryTableDB
     /// <summary>
     /// Custom procedure to encode/decode a BTable row.
     /// </summary>
-    public interface ICustomSerializable
+    public interface IBTableRowSerializable
     {
         /// <summary>
         /// Converts the current object state into a byte array.

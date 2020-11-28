@@ -5,9 +5,10 @@
 
 We can compare the data structure to be like a CSV file, but in completely **binary** version.
 
-Implementing *ICustomSerializable* will enable you with 
+In order to specify encoding/decoding procedures you must implement *ICustomSerializable* to the class representing a row.
 
 ## Data Specification
+There are two different blocks of data in every BTable file version 1, **header** and **body**.
 
 ### Header
 | Name | Size | Type | Value | Description |
@@ -17,5 +18,4 @@ Implementing *ICustomSerializable* will enable you with
 | Row width | 4-byte | Integer | Variable | The number of bytes every row  has
 
 ### Body
-- The entries stored after the header needs to be encoded/decoded implementing *ICustomSerializable*.
-- Each entry cannot exceed the row width.
+The body holds all the rows the BTable has. There can be infinite amount of rows.

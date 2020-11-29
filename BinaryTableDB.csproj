@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <PackageId>BinaryTableDB</PackageId>
-    <Version>1.0.1</Version>
+    <Version>1.1.0</Version>
     <Authors>AxelBrinck</Authors>
     <PackageDescription>Simple binary stream database.</PackageDescription>
     <RepositoryUrl>https://github.com/AxelBrinck/BinaryTableDB</RepositoryUrl>

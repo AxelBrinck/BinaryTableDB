@@ -60,6 +60,42 @@ namespace BinaryTableDB
             _writer.Write((byte) Version);
         }
 
+        public T GetFirstRow()
+        {
+            var rowCount = GetRowCount();
+
+            if (rowCount == 0)
+                throw new InvalidOperationException("The are no rows in the stream!");
+            
+            return ReadRow(0);
+        }
+
+        public T GetLastRow()
+        {
+            var rowCount = GetRowCount();
+
+            if (rowCount == 0)
+                throw new InvalidOperationException("The are no rows in the stream!");
+
+            return ReadRow(rowCount - 1);
+        }   
+
+        /// <summary>
+        /// Gets the amount of rows stored in the BTable.
+        /// </summary>
+        /// <returns>Te amount of rows in BTable.</returns>
+        public long GetRowCount()
+        {
+            if (!rowWidthInitialized) return 0;
+
+            var mod = (_stream.Length - HeaderSize) % _rowWidth;
+
+            if (mod != 0) throw
+                new InvalidDataException("The stream is corrupted!");
+
+            return (_stream.Length - HeaderSize) / _rowWidth;
+        }
+
         /// <summary>
         /// Given a row Id, seeks to its begin position in the stream.
         /// </summary>
@@ -120,7 +156,7 @@ namespace BinaryTableDB
         /// </summary>
         /// <param name="rowId">The row Id to write.</param>
         /// <param name="data">The data to write.</param>
-        public void WriteRow(int rowId, T data)
+        public void WriteRow(long rowId, T data)
         {
             var streamPosition = GetRowIdStreamPosition(rowId);
             
@@ -143,7 +179,7 @@ namespace BinaryTableDB
         /// </summary>
         /// <param name="rowId">The row Id to read from.</param>
         /// <returns>An instantiation from the given row.</returns>
-        public T ReadRow(int rowId)
+        public T ReadRow(long rowId)
         {
             if (!rowWidthInitialized) throw 
                 new InvalidOperationException("The stream is not initialized!");

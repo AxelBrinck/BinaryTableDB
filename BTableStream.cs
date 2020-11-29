@@ -60,6 +60,10 @@ namespace BinaryTableDB
             _writer.Write((byte) Version);
         }
 
+        /// <summary>
+        /// Gets the first row in the stream.
+        /// </summary>
+        /// <returns>The first row in the stream.</returns>
         public T GetFirstRow()
         {
             var rowCount = GetRowCount();
@@ -70,6 +74,10 @@ namespace BinaryTableDB
             return ReadRow(0);
         }
 
+        /// <summary>
+        /// Gets the last row in the stream.
+        /// </summary>
+        /// <returns>The last row in the stream.</returns>
         public T GetLastRow()
         {
             var rowCount = GetRowCount();
@@ -133,6 +141,12 @@ namespace BinaryTableDB
                 new InvalidOperationException("Inbound data is bigger than row width.");
         }
 
+        /// <summary>
+        /// Writes a row to the specified stream position.
+        /// Also, initializes the stream with a row width, if the stream has not been init yet.
+        /// </summary>
+        /// <param name="streamPosition">The stream position to seek.</param>
+        /// <param name="data">The data to write.</param>
         private void Write(long streamPosition, T data)
         {
             var serial = data.Serialize();

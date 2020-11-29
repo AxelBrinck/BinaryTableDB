@@ -133,7 +133,7 @@ namespace BinaryTableDB
         /// <param name="data">The data to append to the stream.</param>
         public void AppendRow(T data)
         {
-            var streamPosition = _stream.Length;
+            var streamPosition = !rowWidthInitialized ? 8 : _stream.Length;
 
             Write(streamPosition, data);
         }
